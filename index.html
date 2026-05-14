@@ -99,14 +99,14 @@
 
   /* ── Section Headers ── */
   .sec-label {
-    font-size: 12px; font-weight: 600; letter-spacing: .5px;
+    font-size: 13px; font-weight: 700; letter-spacing: 1px;
     color: var(--accent); margin-bottom: 8px;
   }
   .sec-title {
-    font-size: 26px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 8px; color: var(--text);
+    font-size: 28px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 10px; color: var(--text);
   }
-  @media (min-width: 640px) { .sec-title { font-size: 30px; } }
-  .sec-desc { color: var(--text2); font-size: 15px; margin-bottom: 36px; }
+  @media (min-width: 640px) { .sec-title { font-size: 32px; } }
+  .sec-desc { color: var(--text2); font-size: 16px; margin-bottom: 36px; }
 
   /* ── Pain Cards ── */
   .pain-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -118,10 +118,10 @@
   }
   .pain-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
   .pain-card-icon { font-size: 30px; margin-bottom: 14px; }
-  .pain-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; letter-spacing: -.2px; color: var(--text); }
+  .pain-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; letter-spacing: -.2px; color: var(--text); }
   .pain-card .quote {
-    font-size: 14px; color: var(--text2); font-weight: 400;
-    line-height: 1.65; padding: 14px 16px;
+    font-size: 15px; color: var(--text); font-weight: 500;
+    line-height: 1.7; padding: 16px 18px;
     background: #F9F9FB; border-radius: var(--radius-sm);
     border-left: 3px solid var(--accent);
     position: relative;
@@ -160,11 +160,26 @@
   .tl-card:nth-child(2) .time { color: #5856D6; }
   .tl-card:nth-child(3) .time { color: #34C759; }
   .tl-card:nth-child(4) .time { color: #FF9500; }
-  .tl-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; letter-spacing: -.2px; }
-  .tl-card .desc { font-size: 12px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; flex: 1; }
+  .tl-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 12px; letter-spacing: -.2px; color: var(--text); }
+  .tl-card .desc-list {
+    list-style: none; padding: 0; margin: 0 0 14px; flex: 1;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .tl-card .desc-list li {
+    font-size: 13px; color: var(--text2); line-height: 1.55;
+    padding-left: 16px; position: relative;
+  }
+  .tl-card .desc-list li::before {
+    content: ''; position: absolute; left: 0; top: 9px;
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .tl-card:nth-child(1) .desc-list li::before { background: #007AFF; }
+  .tl-card:nth-child(2) .desc-list li::before { background: #5856D6; }
+  .tl-card:nth-child(3) .desc-list li::before { background: #34C759; }
+  .tl-card:nth-child(4) .desc-list li::before { background: #FF9500; }
   .tl-card .gain {
-    font-size: 11px; line-height: 1.5; padding: 8px 10px; border-radius: 10px;
-    margin-top: auto; font-weight: 500;
+    font-size: 12px; line-height: 1.5; padding: 10px 12px; border-radius: 10px;
+    margin-top: auto; font-weight: 600; letter-spacing: -.1px;
   }
   .tl-card:nth-child(1) .gain { background: #EBF5FF; color: #007AFF; }
   .tl-card:nth-child(2) .gain { background: #F3F0FF; color: #5856D6; }
@@ -385,28 +400,48 @@
       <div class="tl-num">1</div>
       <div class="time">14:00 — 14:40</div>
       <h4>看清趋势，找准方向</h4>
-      <p class="desc">拆透35岁清零的真问题，教大厂人如何构建可复利的个人资产。解析纳瓦尔复利公式与四种商业杠杆，看懂为什么AI时代是大厂人最值钱的窗口期。</p>
+      <ul class="desc-list">
+        <li>拆透35岁清零背后的真问题</li>
+        <li>教你如何构建可复利的个人资产</li>
+        <li>解析纳瓦尔复利公式与四种商业杠杆</li>
+        <li>看懂AI时代为什么是大厂人最值钱的窗口期</li>
+      </ul>
       <div class="gain">你将看清：为什么是你 · 为什么是现在</div>
     </div>
     <div class="tl-card">
       <div class="tl-num">2</div>
       <div class="time">14:40 — 15:20</div>
       <h4>拆解案例，避坑借鉴</h4>
-      <p class="desc">7个真实变现案例深度拆解，从"24.9元卖济州岛攻略赚4.6万"到"AI矩阵号130万GMV"。三层金字塔分析法：比你差的人怎么做、同辈大厂人怎么做、我自己怎么做。</p>
-      <div class="gain">你将获得：每个案例的业务模型公式 + 关键成功洞察</div>
+      <ul class="desc-list">
+        <li>7个真实变现案例深度拆解</li>
+        <li>从"24.9元卖攻略赚4.6万"到"AI矩阵号130万GMV"</li>
+        <li>三层金字塔分析法：比你差的人、同辈大厂人、我自己</li>
+        <li>每个案例配套完整业务模型公式</li>
+      </ul>
+      <div class="gain">你将获得：案例业务模型公式 + 关键成功洞察</div>
     </div>
     <div class="tl-card">
       <div class="tl-num">3</div>
       <div class="time">15:20 — 16:00</div>
       <h4>找到定位，落地实操</h4>
-      <p class="desc">IP定位10问法现场练习，写出你的专属业务模型公式。四维对标账号拆解法，结合正反面案例找到最适合你的对标方向。CES+CQS双算法深度解析 + 7条爆款实操技巧。</p>
-      <div class="gain">你将带走：你的专属业务模型公式 · 潜在收入测算</div>
+      <ul class="desc-list">
+        <li>IP定位10问法现场练习，写出你的专属业务模型公式</li>
+        <li>四维对标账号拆解法，找到最适合你的对标方向</li>
+        <li>CES + CQS双算法深度解析</li>
+        <li>7条可复用爆款内容实操技巧</li>
+      </ul>
+      <div class="gain">你将带走：专属业务模型公式 · 潜在收入测算</div>
     </div>
     <div class="tl-card">
       <div class="tl-num">4</div>
       <div class="time">16:00 — 17:00</div>
       <h4>AI实战，一人成军</h4>
-      <p class="desc">现场跑通4个爆款内容生产流水线：选题雷达、AI写作、自动发布、配图生成。掌握一人公司持久三要素：AIGC降本增效、活人感护城河、粉丝共创N×N增长。</p>
+      <ul class="desc-list">
+        <li>现场跑通4个爆款内容生产流水线</li>
+        <li>选题雷达、AI写作、自动发布、配图生成</li>
+        <li>掌握一人公司持久三要素</li>
+        <li>AIGC降本增效 · 活人感护城河 · 粉丝共创N×N增长</li>
+      </ul>
       <div class="gain">你将掌握：4个AI流水线 · 直接复用，即可变现</div>
     </div>
   </div>
