@@ -3,560 +3,544 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="color-scheme" content="dark">
-<title>小红书 · 大厂人一人公司 — 3小时线下实战</title>
+<title>大厂人 · 一人公司 — 知行新商学</title>
 <style>
   :root {
-    --bg: #0C0C0C;
-    --bg-card: #111111;
-    --red: #D90000;
-    --red-deep: #B00000;
-    --gold: #D4AF37;
-    --gold-light: #E6C260;
-    --white: #FFFFFF;
-    --white-60: rgba(255,255,255,.60);
-    --white-40: rgba(255,255,255,.40);
-    --white-15: rgba(255,255,255,.15);
-    --white-08: rgba(255,255,255,.08);
-    --radius: 8px;
-    --font-editorial: "PingFang SC", "Hiragino Sans GB", "Noto Serif SC", "Source Han Serif SC", "Microsoft YaHei", serif;
-    --line: 1px solid var(--white-15);
+    --bg: #F2F2F7;
+    --card: #FFFFFF;
+    --text: #1C1C1E;
+    --text2: #636366;
+    --text3: #8E8E93;
+    --accent: #007AFF;
+    --accent-light: #EBF5FF;
+    --sep: #E5E5EA;
+    --red: #FF3B30;
+    --gold: #FF9500;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 2px 8px rgba(0,0,0,.06);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,.08);
+    --radius: 16px;
+    --radius-sm: 12px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; background: var(--bg); }
+  html { scroll-behavior: smooth; }
 
   body {
-    font-family: var(--font-editorial);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     background: var(--bg);
-    color: var(--white);
-    line-height: 1.8;
+    color: var(--text);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    max-width: 100vw;
-    overflow-x: hidden;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ── Texture & ambient ── */
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.003) 2px, rgba(255,255,255,.003) 4px),
-      radial-gradient(ellipse at 50% 0%, rgba(217,0,0,.06) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 30%, rgba(212,175,55,.04) 0%, transparent 50%);
+  /* ── Navigation (frosted glass) ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(242,242,247,.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: .5px solid var(--sep);
+    padding: 0 24px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
   }
-  body::after {
-    content: ''; position: fixed; top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(212,175,55,.3), transparent);
-    z-index: 999; pointer-events: none;
+  .nav-logo { font-weight: 600; font-size: 16px; color: var(--text); letter-spacing: -.2px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text2); text-decoration: none; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #fff; border: none;
+    font-size: 13px; font-weight: 600; padding: 6px 16px;
+    border-radius: 20px; cursor: pointer; transition: opacity .15s;
+    letter-spacing: -.1px;
   }
+  .nav-cta:hover { opacity: .85; }
+  .nav-cta:active { opacity: .6; }
 
-  .page { position: relative; z-index: 1; }
-
-  /* ── Masthead ── */
-  .masthead {
-    padding: 80px 24px 48px; text-align: center;
-    border-bottom: var(--line);
-    max-width: 720px; margin: 0 auto;
-  }
-  .masthead .no {
-    font-size: 11px; letter-spacing: 3px; color: var(--gold);
-    text-transform: uppercase; margin-bottom: 8px;
-  }
-  .masthead .publisher {
-    font-size: 12px; color: var(--white-60); letter-spacing: 1px;
-  }
-  .masthead .season {
-    font-size: 11px; color: var(--white-40); margin-top: 2px;
-    font-style: italic; letter-spacing: .5px;
-  }
-  .masthead .declaration {
-    display: inline-block; margin-top: 16px;
-    font-size: 10px; color: var(--gold); letter-spacing: 2px;
-    border: 1px solid rgba(212,175,55,.3); padding: 4px 14px; border-radius: 20px;
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav { padding: 0 16px; }
   }
 
   /* ── Sections ── */
-  .section { max-width: 680px; margin: 0 auto; padding: 64px 24px; }
-  .section + .section { border-top: var(--line); }
+  .section { max-width: 700px; margin: 0 auto; padding: 80px 20px; }
 
-  /* ── Editorial Label ── */
-  .ed-label {
-    font-size: 10px; letter-spacing: 3px; color: var(--gold);
-    text-transform: uppercase; margin-bottom: 20px;
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 120px 20px 64px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .hero-tag {
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    background: var(--accent-light); padding: 5px 14px; border-radius: 16px;
+    letter-spacing: -.1px;
   }
-  .ed-label::before { content: '§ '; }
+  .hero h1 {
+    font-size: 34px; font-weight: 700; line-height: 1.15;
+    letter-spacing: -.8px; margin-bottom: 12px; color: var(--text);
+  }
+  @media (min-width: 640px) { .hero h1 { font-size: 40px; } }
+  .hero h1 em {
+    font-style: normal; color: var(--accent);
+  }
+  .hero-subtitle { font-size: 17px; color: var(--text2); margin-bottom: 8px; font-weight: 400; }
+  .hero-lecturer { font-size: 14px; color: var(--text3); margin-bottom: 32px; }
+  .hero-lecturer strong { color: var(--accent); font-weight: 600; }
+  .hero .btn-primary {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 14px 36px; border-radius: 24px; font-size: 16px;
+    font-weight: 600; text-decoration: none; letter-spacing: -.2px;
+    box-shadow: 0 4px 14px rgba(0,122,255,.25);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .hero .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,122,255,.35); }
+  .hero .btn-primary:active { transform: scale(.97); }
+  .hero-meta { margin-top: 18px; font-size: 13px; color: var(--text3); }
 
-  /* ── Title Block ── */
-  .title-block { padding: 56px 24px 32px; max-width: 680px; margin: 0 auto; text-align: center; }
-  .title-block .q {
-    font-size: 30px; font-weight: 800; line-height: 1.3; letter-spacing: -.5px;
-    margin-bottom: 16px;
+  /* ── Section Headers ── */
+  .sec-label {
+    font-size: 12px; font-weight: 600; letter-spacing: .5px;
+    color: var(--accent); margin-bottom: 8px;
   }
-  @media (min-width: 640px) { .title-block .q { font-size: 38px; } }
-  .title-block .q em { font-style: normal; color: var(--red); }
-  .title-block .desc {
-    font-size: 14px; color: var(--white-60); line-height: 1.7;
-    max-width: 480px; margin: 0 auto;
+  .sec-title {
+    font-size: 26px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 8px; color: var(--text);
+  }
+  @media (min-width: 640px) { .sec-title { font-size: 30px; } }
+  .sec-desc { color: var(--text2); font-size: 15px; margin-bottom: 36px; }
+
+  /* ── Pain Cards ── */
+  .pain-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 640px) { .pain-cards { grid-template-columns: 1fr; } }
+  .pain-card {
+    background: var(--card); border-radius: var(--radius); padding: 28px 22px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .pain-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .pain-card-icon { font-size: 30px; margin-bottom: 14px; }
+  .pain-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; letter-spacing: -.2px; color: var(--text); }
+  .pain-card .quote {
+    font-size: 14px; color: var(--text2); font-weight: 400;
+    line-height: 1.65; padding: 14px 16px;
+    background: #F9F9FB; border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent);
+    position: relative;
   }
 
-  /* ── Archive Card ── */
-  .archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  @media (max-width: 640px) { .archive-grid { grid-template-columns: 1fr; } }
+  /* ── Data Strip ── */
+  .data-strip { display: flex; justify-content: center; gap: 56px; flex-wrap: wrap; text-align: center; }
+  .data-item .num {
+    font-size: 44px; font-weight: 700; color: var(--accent); letter-spacing: -2px; line-height: 1;
+  }
+  @media (min-width: 640px) { .data-item .num { font-size: 52px; } }
+  .data-item .label { font-size: 13px; color: var(--text3); margin-top: 6px; }
+  .data-note { text-align: center; font-size: 12px; color: var(--text3); margin-top: 18px; }
 
-  .archive-card {
-    background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(25,5,5,1) 100%);
-    border: 1px solid rgba(217,0,0,.15); border-radius: var(--radius);
-    padding: 28px 22px; position: relative;
+  /* ── Timeline ── */
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 768px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .timeline { grid-template-columns: 1fr; } }
+  .tl-card {
+    background: var(--card); border-radius: var(--radius); padding: 24px 18px 20px;
+    box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
   }
-  .archive-card .idx {
-    font-size: 10px; color: var(--gold); letter-spacing: 2px;
-    margin-bottom: 14px;
-  }
-  .archive-card h3 {
-    font-size: 16px; font-weight: 700; margin-bottom: 10px;
-    letter-spacing: -.3px; color: var(--red);
-  }
-  .archive-card .quote {
-    font-size: 14px; color: var(--white-60); line-height: 1.7;
-    font-style: italic; position: relative; padding-left: 14px;
-    border-left: 2px solid rgba(217,0,0,.3);
-  }
-
-  /* ── Data Ledger ── */
-  .ledger {
-    display: flex; justify-content: center; gap: 56px; flex-wrap: wrap;
-  }
-  .ledger-item { text-align: center; }
-  .ledger-item .val {
-    font-size: 44px; font-weight: 800; letter-spacing: -2px;
-    color: var(--gold); line-height: 1.1;
-  }
-  @media (min-width: 640px) { .ledger-item .val { font-size: 56px; } }
-  .ledger-item .val span { font-size: 20px; }
-  .ledger-item .lbl { font-size: 12px; color: var(--white-40); margin-top: 6px; letter-spacing: 1px; }
-  .ledger-note {
-    text-align: center; font-size: 11px; color: var(--white-40);
-    margin-top: 20px; letter-spacing: 1px;
-  }
-
-  /* ── Synopsis / Timeline ── */
-  .synopsis { display: flex; flex-direction: column; gap: 20px; }
-  .syn-item {
-    display: flex; gap: 24px; align-items: flex-start;
-    background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(25,5,5,1) 100%);
-    border: 1px solid var(--white-08); border-radius: var(--radius);
-    padding: 28px 24px;
-  }
-  @media (max-width: 540px) { .syn-item { flex-direction: column; gap: 12px; } }
-  .syn-num {
-    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  .tl-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .tl-num {
+    width: 36px; height: 36px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 800; color: var(--white);
-    border: 1px solid rgba(217,0,0,.4);
-    background: rgba(217,0,0,.1);
+    font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 14px; flex-shrink: 0;
   }
-  .syn-body { flex: 1; }
-  .syn-body .time {
-    font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-bottom: 4px;
+  .tl-card:nth-child(1) .tl-num { background: #007AFF; }
+  .tl-card:nth-child(2) .tl-num { background: #5856D6; }
+  .tl-card:nth-child(3) .tl-num { background: #34C759; }
+  .tl-card:nth-child(4) .tl-num { background: #FF9500; }
+  .tl-card .time { font-size: 12px; font-weight: 600; letter-spacing: .3px; margin-bottom: 6px; }
+  .tl-card:nth-child(1) .time { color: #007AFF; }
+  .tl-card:nth-child(2) .time { color: #5856D6; }
+  .tl-card:nth-child(3) .time { color: #34C759; }
+  .tl-card:nth-child(4) .time { color: #FF9500; }
+  .tl-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; letter-spacing: -.2px; }
+  .tl-card .desc { font-size: 12px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; flex: 1; }
+  .tl-card .gain {
+    font-size: 11px; line-height: 1.5; padding: 8px 10px; border-radius: 10px;
+    margin-top: auto; font-weight: 500;
   }
-  .syn-body h4 { font-size: 17px; font-weight: 700; margin-bottom: 6px; letter-spacing: -.3px; }
-  .syn-body .desc { font-size: 13px; color: var(--white-60); line-height: 1.7; margin-bottom: 8px; }
-  .syn-body .gain {
-    font-size: 12px; padding: 8px 12px; border-radius: 4px;
-    background: rgba(217,0,0,.08); color: var(--gold);
-    display: inline-block; letter-spacing: .5px;
-  }
+  .tl-card:nth-child(1) .gain { background: #EBF5FF; color: #007AFF; }
+  .tl-card:nth-child(2) .gain { background: #F3F0FF; color: #5856D6; }
+  .tl-card:nth-child(3) .gain { background: #ECFDF3; color: #34C759; }
+  .tl-card:nth-child(4) .gain { background: #FFF5EB; color: #FF9500; }
 
-  /* ── Author Bio ── */
-  .author {
-    background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(25,5,5,1) 100%);
-    border: 1px solid rgba(212,175,55,.12); border-radius: var(--radius);
-    padding: 40px 32px;
+  /* ── Lecturer ── */
+  .lec-card {
+    background: var(--card); border-radius: var(--radius); padding: 36px 32px;
+    box-shadow: var(--shadow-sm);
   }
-  .author-header { display: flex; gap: 24px; align-items: center; margin-bottom: 20px; }
-  @media (max-width: 480px) { .author-header { flex-direction: column; text-align: center; } }
-  .author-av {
-    width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
-    background: linear-gradient(135deg, rgba(217,0,0,.2), rgba(212,175,55,.15));
+  .lec-top { display: flex; gap: 24px; align-items: center; margin-bottom: 20px; }
+  @media (max-width: 480px) { .lec-top { flex-direction: column; text-align: center; } }
+  .lec-av {
+    width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, #EBF5FF, #E8E8ED);
     display: flex; align-items: center; justify-content: center;
-    font-size: 30px; border: 1px solid rgba(212,175,55,.2);
+    font-size: 38px;
   }
-  .author-header h3 { font-size: 22px; font-weight: 800; letter-spacing: -.3px; }
-  .author-header .role { font-size: 12px; color: var(--gold); letter-spacing: 1px; margin-top: 2px; }
-  .author-story { font-size: 14px; color: var(--white-60); line-height: 1.9; margin-bottom: 16px; }
-  .author-story strong { color: var(--white); }
-  .author-highlight {
-    display: inline-block; font-size: 13px; color: var(--gold);
-    border-left: 3px solid var(--red); padding: 6px 14px;
-    background: rgba(217,0,0,.06); letter-spacing: .5px;
+  .lec-top h3 { font-size: 22px; font-weight: 700; letter-spacing: -.3px; }
+  .lec-top .r { font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 2px; letter-spacing: .3px; }
+  .lec-story { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 16px; }
+  .lec-story strong { color: var(--text); }
+  .lec-hl {
+    display: inline-block; font-size: 13px; color: var(--accent); font-weight: 500;
+    background: var(--accent-light); padding: 8px 16px; border-radius: 10px;
   }
-  .author-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px;
+  .lec-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 480px) { .lec-stats { grid-template-columns: 1fr; } }
+  .lec-stat {
+    text-align: center; padding: 20px 12px; background: #F9F9FB; border-radius: var(--radius-sm);
   }
-  @media (max-width: 480px) { .author-stats { grid-template-columns: 1fr; } }
-  .author-stat {
-    text-align: center; padding: 20px 12px;
-    background: rgba(255,255,255,.03); border-radius: var(--radius);
-    border: 1px solid var(--white-08);
-  }
-  .author-stat .num { font-size: 30px; font-weight: 800; color: var(--gold); letter-spacing: -1px; }
-  .author-stat .num span { font-size: 15px; }
-  .author-stat .note { font-size: 11px; color: var(--white-40); margin-top: 4px; letter-spacing: .5px; }
+  .lec-stat .n { font-size: 30px; font-weight: 700; color: var(--accent); letter-spacing: -1px; }
+  .lec-stat .l { font-size: 12px; color: var(--text3); margin-top: 4px; }
 
-  /* ── Inventory (Takeaways) ── */
-  .inventory { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  @media (max-width: 480px) { .inventory { grid-template-columns: 1fr; } }
+  /* ── Takeaways ── */
+  .inventory { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 640px) { .inventory { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 400px) { .inventory { grid-template-columns: 1fr; } }
   .inv-item {
-    border: 1px solid var(--white-08); border-radius: var(--radius);
-    padding: 22px 20px; text-align: center;
-    background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(25,5,5,1) 100%);
+    background: var(--card); border-radius: var(--radius-sm); padding: 24px 18px;
+    text-align: center; box-shadow: var(--shadow-sm);
   }
   .inv-item .icon { font-size: 28px; margin-bottom: 8px; }
-  .inv-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; letter-spacing: -.2px; }
-  .inv-item p { font-size: 12px; color: var(--white-40); line-height: 1.6; }
+  .inv-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; letter-spacing: -.1px; }
+  .inv-item p { font-size: 12px; color: var(--text3); line-height: 1.5; }
 
   /* ── FAQ ── */
-  .faq-list { display: flex; flex-direction: column; gap: 6px; }
-  .faq-item { border-bottom: 1px solid var(--white-08); }
+  .faq-list { display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: .5px solid var(--sep); }
   .faq-q {
-    padding: 18px 0; font-size: 15px; font-weight: 600;
+    padding: 16px 0; font-weight: 600; font-size: 15px;
     cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-    user-select: none; letter-spacing: -.2px;
+    user-select: none; letter-spacing: -.1px; color: var(--text);
   }
-  .faq-q::after {
-    content: '+'; font-size: 16px; color: var(--gold); font-weight: 300;
-    transition: transform .2s;
-  }
+  .faq-q::after { content: '+'; font-size: 16px; color: var(--accent); font-weight: 400; }
   .faq-item.open .faq-q::after { content: '−'; }
-  .faq-a {
-    font-size: 13px; color: var(--white-60); line-height: 1.8;
-    padding-bottom: 16px; display: none;
-  }
+  .faq-a { font-size: 14px; color: var(--text2); line-height: 1.7; padding-bottom: 16px; display: none; }
   .faq-item.open .faq-a { display: block; }
 
   /* ── CTA ── */
-  .cta-final {
-    text-align: center; padding: 72px 24px;
-    border-top: 1px solid rgba(212,175,55,.15);
-  }
+  .cta-section { text-align: center; padding: 80px 20px; }
   .cta-card {
-    display: inline-block; max-width: 440px; width: 100%;
+    background: var(--card); border-radius: var(--radius); padding: 40px 32px;
+    box-shadow: var(--shadow-lg); display: inline-block; max-width: 420px; width: 100%;
   }
   .cta-card .scarcity {
-    font-size: 11px; color: var(--red); letter-spacing: 2px;
-    margin-bottom: 16px;
+    font-size: 12px; font-weight: 600; color: var(--red); letter-spacing: .5px; margin-bottom: 16px;
   }
-  .cta-card .price-blk {
-    margin-bottom: 24px;
+  .cta-card .price {
+    font-size: 48px; font-weight: 700; letter-spacing: -2px; color: var(--text); margin-bottom: 4px;
   }
-  .cta-card .price-main {
-    font-size: 52px; font-weight: 800; letter-spacing: -3px;
-    color: var(--white);
+  .cta-card .price span { font-size: 18px; font-weight: 400; }
+  .cta-card .hike { font-size: 13px; color: var(--red); margin-bottom: 20px; font-weight: 500; }
+  .cta-card .detail { font-size: 14px; color: var(--text2); margin-bottom: 4px; }
+  .cta-card .detail strong { color: var(--text); }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 14px 42px; border-radius: 24px; font-size: 16px;
+    font-weight: 600; text-decoration: none; margin-top: 24px;
+    box-shadow: 0 4px 14px rgba(0,122,255,.25);
+    letter-spacing: -.2px; border: none; cursor: pointer;
+    transition: transform .15s;
   }
-  .cta-card .price-main span { font-size: 20px; font-weight: 400; letter-spacing: 0; }
-  .cta-card .price-hike {
-    font-size: 12px; color: var(--red); letter-spacing: .5px; margin-top: 2px;
-  }
-  .cta-card .meta { font-size: 13px; color: var(--white-60); margin-bottom: 6px; letter-spacing: .3px; }
-  .cta-card .meta strong { color: var(--white); }
-
-  .cta-arrow {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 17px; font-weight: 700; color: var(--red);
-    text-decoration: none; letter-spacing: .5px;
-    padding: 14px 32px; margin-top: 28px;
-    border: 1.5px solid var(--red); border-radius: var(--radius);
-    transition: background .2s, color .2s;
-  }
-  .cta-arrow:hover { background: var(--red); color: var(--white); }
-  .cta-arrow::after { content: '→'; font-size: 18px; }
+  .cta-btn:hover { transform: translateY(-1px); }
+  .cta-btn:active { transform: scale(.97); }
 
   /* ── QR ── */
-  .qr-block { text-align: center; padding: 0 24px 56px; }
-  .qr-block .label { font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-bottom: 14px; }
+  .qr-section { text-align: center; padding: 0 20px 56px; }
+  .qr-section .ql { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .5px; margin-bottom: 14px; }
   .qr-placeholder {
     width: 140px; height: 140px; margin: 0 auto 12px;
-    background: rgba(255,255,255,.04); border-radius: var(--radius);
+    background: #F9F9FB; border-radius: var(--radius-sm);
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; color: var(--white-40); border: 1px solid var(--white-08);
+    font-size: 12px; color: var(--text3); border: 1px dashed var(--sep);
   }
-  .qr-block .wx { font-size: 13px; color: var(--white-60); letter-spacing: .3px; }
-  .qr-block .wx strong { color: var(--gold); }
+  .qr-note { font-size: 13px; color: var(--text3); }
+  .qr-note strong { color: var(--accent); font-weight: 600; }
 
   /* ── Bottom Bar ── */
   .bottom-bar {
     display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(12,12,12,.95); border-top: 1px solid rgba(217,0,0,.2);
-    padding: 12px 20px; align-items: center; justify-content: space-between;
+    background: rgba(242,242,247,.88);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-top: .5px solid var(--sep);
+    padding: 10px 16px; align-items: center; justify-content: space-between;
   }
+  .bb-safe { padding-bottom: env(safe-area-inset-bottom); }
   @media (max-width: 768px) { .bottom-bar { display: flex; } }
-  .bottom-bar .info { font-size: 12px; color: var(--white-60); letter-spacing: .3px; }
-  .bottom-bar .info .p { font-weight: 700; color: var(--gold); }
-  .bottom-bar .bb-btn {
-    font-size: 13px; font-weight: 700; color: var(--white);
-    background: var(--red); border: none; padding: 8px 20px;
-    border-radius: 20px; letter-spacing: .5px; cursor: pointer;
+  .bottom-bar .info { font-size: 13px; color: var(--text2); }
+  .bottom-bar .info .p { font-weight: 700; color: var(--accent); }
+  .bb-btn {
+    background: var(--accent); color: #fff; border: none;
+    padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 600;
+    cursor: pointer; letter-spacing: -.1px;
   }
 
   /* ── Footer ── */
   .footer {
-    text-align: center; padding: 40px 24px; font-size: 11px;
-    color: var(--white-40); letter-spacing: 1px;
-    border-top: var(--line);
+    text-align: center; padding: 32px 20px; font-size: 12px; color: var(--text3);
+    letter-spacing: .3px;
   }
-  .footer .gold-dot { color: var(--gold); }
+  .footer .dot { color: var(--accent); }
 
   /* ── Utility ── */
-  .accent { color: var(--gold); font-weight: 700; }
   .text-center { text-align: center; }
-  .mt-12 { margin-top: 12px; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
   .mt-20 { margin-top: 20px; }
 </style>
 </head>
 <body>
 
-<div class="page">
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-logo">知行新商学</div>
+  <ul class="nav-links">
+    <li><a href="#pain">痛点</a></li>
+    <li><a href="#timeline">大纲</a></li>
+    <li><a href="#lecturer">讲师</a></li>
+    <li><a href="#takeaways">收获</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">立即报名</button>
+</nav>
 
-  <!-- Masthead -->
-  <header class="masthead">
-    <div class="no">№ 001 / 2026</div>
-    <div class="publisher">瑶瑶 · AI 实战派</div>
-    <div class="season">Issued in Spring &nbsp;·&nbsp; 杭州线下特辑</div>
-    <div class="declaration">FOR INTERNAL USE ONLY · EST. 2026</div>
-  </header>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-tags">
+    <span class="hero-tag">不裸辞</span>
+    <span class="hero-tag">不露脸</span>
+    <span class="hero-tag">不伤体面</span>
+  </div>
+  <h1>大厂人，你的下一条路<br>不一定在<em>大厂</em></h1>
+  <p class="hero-subtitle">3小时线下沉浸式实战 · 用AI搭建属于你的一人公司</p>
+  <p class="hero-lecturer">
+    主讲人：<strong>轩廷</strong> · 北大CS硕士 · 阿里5年PM · 副业2个月变现8万+
+  </p>
+  <a href="#cta" class="btn-primary">锁定名额 →</a>
+  <p class="hero-meta">5月17日 · 杭州拱墅区 · 仅限25席</p>
+</section>
 
-  <!-- Title -->
-  <section class="title-block">
-    <h1 class="q">
-      离开大厂，<br>你还能靠什么<em>赚钱</em>？
-    </h1>
-    <p class="desc">
-      一份专为大厂人定制的诊断——你的能力结构、职业处境、副业可能性，只需要3小时看清答案。<br>
-      由真实跑通"大厂人 × AI 一人公司"闭环的实战者主持，AI辅助输出，真人把关。
+<!-- Pain -->
+<section class="section" id="pain">
+  <p class="sec-label">这道题你也在做</p>
+  <h2 class="sec-title">你不是一个人</h2>
+  <p class="sec-desc">每一个大厂人都在深夜想过同一个问题：离开平台，我还剩下什么？</p>
+  <div class="pain-cards">
+    <div class="pain-card">
+      <div class="pain-card-icon">🔩</div>
+      <h3>能力越干越窄</h3>
+      <p class="quote">"在大厂写了5年SQL，优化了几百个CTR指标，出去不知道能干什么。"</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-card-icon">🪜</div>
+      <h3>晋升通道固化</h3>
+      <p class="quote">"身边的P8越来越多，但那个名额——凭什么是你？"</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-card-icon">🔄</div>
+      <h3>没有复利积累</h3>
+      <p class="quote">"加班换来的只有工资。期权、年终、职级——离开大厂那一刻，全部清零。"</p>
+    </div>
+  </div>
+  <p class="text-center mt-20" style="font-size:13px;color:var(--text3);">
+    35岁之后你在平台攒的一切：期权、工资、年终、职级、人脉——<span style="color:var(--red);font-weight:600;">都会清零</span>。<br>
+    但也有人，已经在你之前找到了第二条路。
+  </p>
+</section>
+
+<!-- Data -->
+<section class="section" style="padding-top:24px;padding-bottom:24px;">
+  <div class="data-strip">
+    <div class="data-item">
+      <div class="num">60<span style="font-size:20px;">篇</span></div>
+      <div class="label">AI辅助产出笔记</div>
+    </div>
+    <div class="data-item">
+      <div class="num">1,500<span style="font-size:20px;">+</span></div>
+      <div class="label">精准付费粉丝</div>
+    </div>
+    <div class="data-item">
+      <div class="num">8<span style="font-size:20px;">万+</span></div>
+      <div class="label">2个月副业变现</div>
+    </div>
+  </div>
+  <p class="data-note">以上数据来自讲师轩廷的真实副业战绩</p>
+</section>
+
+<!-- Timeline -->
+<section class="section" id="timeline">
+  <p class="sec-label">3小时你会经历什么</p>
+  <h2 class="sec-title">一条从打工到复利的路径</h2>
+  <p class="sec-desc">不是泛泛而谈的分享，每一步都有具体方法、真实案例、可带走模板。</p>
+  <div class="timeline">
+    <div class="tl-card">
+      <div class="tl-num">1</div>
+      <div class="time">14:00 — 14:40</div>
+      <h4>看清趋势，找准方向</h4>
+      <p class="desc">拆透35岁清零的真问题，教大厂人如何构建可复利的个人资产。解析纳瓦尔复利公式与四种商业杠杆，看懂为什么AI时代是大厂人最值钱的窗口期。</p>
+      <div class="gain">你将看清：为什么是你 · 为什么是现在</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-num">2</div>
+      <div class="time">14:40 — 15:20</div>
+      <h4>拆解案例，避坑借鉴</h4>
+      <p class="desc">7个真实变现案例深度拆解，从"24.9元卖济州岛攻略赚4.6万"到"AI矩阵号130万GMV"。三层金字塔分析法：比你差的人怎么做、同辈大厂人怎么做、我自己怎么做。</p>
+      <div class="gain">你将获得：每个案例的业务模型公式 + 关键成功洞察</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-num">3</div>
+      <div class="time">15:20 — 16:00</div>
+      <h4>找到定位，落地实操</h4>
+      <p class="desc">IP定位10问法现场练习，写出你的专属业务模型公式。四维对标账号拆解法，结合正反面案例找到最适合你的对标方向。CES+CQS双算法深度解析 + 7条爆款实操技巧。</p>
+      <div class="gain">你将带走：你的专属业务模型公式 · 潜在收入测算</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-num">4</div>
+      <div class="time">16:00 — 17:00</div>
+      <h4>AI实战，一人成军</h4>
+      <p class="desc">现场跑通4个爆款内容生产流水线：选题雷达、AI写作、自动发布、配图生成。掌握一人公司持久三要素：AIGC降本增效、活人感护城河、粉丝共创N×N增长。</p>
+      <div class="gain">你将掌握：4个AI流水线 · 直接复用，即可变现</div>
+    </div>
+  </div>
+</section>
+
+<!-- Lecturer -->
+<section class="section" id="lecturer">
+  <p class="sec-label">谁来讲</p>
+  <h2 class="sec-title">他走过你要走的路</h2>
+  <p class="sec-desc">不是职业讲师，是跟你一样从大厂走出来、用AI一个人跑通了商业闭环的实战者。</p>
+  <div class="lec-card">
+    <div class="lec-top">
+      <div class="lec-av">🧑‍💻</div>
+      <div>
+        <h3>轩廷</h3>
+        <div class="r">策略AI产品专家 · 主讲人</div>
+      </div>
+    </div>
+    <p class="lec-story">
+      北大计算机硕士，<strong>阿里5年搜索策略PM</strong>。和每一位大厂人一样，他也经历过表演性加班、晋升焦虑、身心透支。<br><br>
+      不同的是，他没有等到35岁才开始想退路。他用<strong>下班后的碎片时间</strong>，不露脸、不裸辞、不伤体面——在小红书跑通了从0到1的变现闭环：<strong>仅用2个月，变现8万+</strong>。
     </p>
-  </section>
-
-  <!-- Pain Points -->
-  <section class="section" id="pain">
-    <p class="ed-label">诊断档案 · 大厂人普遍处境</p>
-    <div class="archive-grid">
-      <div class="archive-card">
-        <div class="idx">01</div>
-        <h3>能力越干越窄</h3>
-        <p class="quote">"在大厂写了5年SQL，优化了几百个CTR指标，出去不知道能干什么。"</p>
+    <div class="lec-hl">不是"成功学"，是阿里5年产品思维 × AI工具落地的方法论。他讲的东西，每一个都亲自跑通过。</div>
+    <div class="lec-stats">
+      <div class="lec-stat">
+        <div class="n">60<span style="font-size:14px;"> 篇</span></div>
+        <div class="l">AI辅助产出小红书笔记</div>
       </div>
-      <div class="archive-card">
-        <div class="idx">02</div>
-        <h3>晋升通道固化</h3>
-        <p class="quote">"身边的P8越来越多，但那个名额——凭什么是你？"</p>
+      <div class="lec-stat">
+        <div class="n">1,500<span style="font-size:14px;">+</span></div>
+        <div class="l">精准付费粉丝</div>
       </div>
-      <div class="archive-card">
-        <div class="idx">03</div>
-        <h3>没有复利积累</h3>
-        <p class="quote">"加班换来的只有工资。期权、年终、职级——离开大厂那一刻，全部清零。"</p>
+      <div class="lec-stat">
+        <div class="n">8<span style="font-size:14px;"> 万+</span></div>
+        <div class="l">2个月副业变现</div>
       </div>
     </div>
-    <p class="text-center mt-20" style="font-size:12px;color:var(--white-40);letter-spacing:.5px;">
-      35岁之后你在平台攒的一切：期权、工资、年终、职级、人脉——<span class="accent">都会清零</span>。<br>
-      但也有人<span style="color:var(--white);">已经在你之前找到了第二条路</span>。
-    </p>
-  </section>
+  </div>
+</section>
 
-  <!-- Data Ledger -->
-  <section class="section">
-    <p class="ed-label">实证记录 · 讲师轩廷的副业实绩</p>
-    <div class="ledger">
-      <div class="ledger-item">
-        <div class="val">60<span>篇</span></div>
-        <div class="lbl">AI 辅助产出笔记</div>
-      </div>
-      <div class="ledger-item">
-        <div class="val">1,500<span>+</span></div>
-        <div class="lbl">精准付费粉丝</div>
-      </div>
-      <div class="ledger-item">
-        <div class="val">8<span>万+</span></div>
-        <div class="lbl">2 个月副业变现</div>
-      </div>
+<!-- Takeaways -->
+<section class="section" id="takeaways">
+  <p class="sec-label">走出门你能带走什么</p>
+  <h2 class="sec-title">不只是笔记，是能用的武器</h2>
+  <div class="inventory">
+    <div class="inv-item">
+      <div class="icon">🗺️</div>
+      <h4>起号路线图</h4>
+      <p>大厂人真实跑通的副业路径，避开所有割韭菜陷阱</p>
     </div>
-    <p class="ledger-note">以上数据来自讲师真实副业战绩 · 不露脸 · 不裸辞 · 不伤体面</p>
-  </section>
-
-  <!-- Synopsis -->
-  <section class="section" id="timeline">
-    <p class="ed-label">3小时议程 · 从打工人到一人公司</p>
-    <div class="synopsis">
-      <div class="syn-item">
-        <div class="syn-num">1</div>
-        <div class="syn-body">
-          <div class="time">14:00 — 14:40</div>
-          <h4>看清趋势，找准方向</h4>
-          <p class="desc">拆透35岁清零的真问题，构建可复利的个人资产。纳瓦尔复利公式与四种商业杠杆——为什么AI时代是大厂人最值钱的窗口期。</p>
-          <div class="gain">你将看清：为什么是你 · 为什么是现在</div>
-        </div>
-      </div>
-      <div class="syn-item">
-        <div class="syn-num">2</div>
-        <div class="syn-body">
-          <div class="time">14:40 — 15:20</div>
-          <h4>拆解案例，避坑借鉴</h4>
-          <p class="desc">7个真实变现案例深度拆解：从"24.9元卖济州岛攻略赚4.6万"到"AI矩阵号130万GMV"。三层金字塔分析法——比你差的人怎么做、同辈大厂人怎么做、我自己怎么做。</p>
-          <div class="gain">你将获得：每个案例的业务模型公式 + 关键成功洞察</div>
-        </div>
-      </div>
-      <div class="syn-item">
-        <div class="syn-num">3</div>
-        <div class="syn-body">
-          <div class="time">15:20 — 16:00</div>
-          <h4>找到定位，落地实操</h4>
-          <p class="desc">IP定位10问法现场练习，写出你的专属业务模型公式。CES+CQS双算法深度解析 + 7条爆款内容实操技巧。四维对标账号拆解法。</p>
-          <div class="gain">你将带走：你的专属业务模型公式 · 潜在收入测算</div>
-        </div>
-      </div>
-      <div class="syn-item">
-        <div class="syn-num">4</div>
-        <div class="syn-body">
-          <div class="time">16:00 — 17:00</div>
-          <h4>AI实战，一人成军</h4>
-          <p class="desc">现场跑通4个爆款内容生产流水线：选题雷达、AI写作、自动发布、配图生成。一人公司持久三要素——AIGC降本增效、活人感护城河、粉丝共创N×N增长。</p>
-          <div class="gain">你将掌握：4个AI流水线 · 直接复用，即可变现</div>
-        </div>
-      </div>
+    <div class="inv-item">
+      <div class="icon">🤖</div>
+      <h4>AI落地方法</h4>
+      <p>从"懂概念"到"能变现"，4个AI内容生产流水线直接带走</p>
     </div>
-  </section>
-
-  <!-- Author -->
-  <section class="section" id="lecturer">
-    <p class="ed-label">主讲人档案</p>
-    <div class="author">
-      <div class="author-header">
-        <div class="author-av">🧑‍💻</div>
-        <div>
-          <h3>轩廷</h3>
-          <div class="role">策略AI产品专家 · 主讲人</div>
-        </div>
-      </div>
-      <p class="author-story">
-        北大计算机硕士，<strong>阿里5年搜索策略PM</strong>。和每一位大厂人一样，他也经历过表演性加班、晋升焦虑、身心透支。<br><br>
-        不同的是，他没有等到35岁才开始想退路。他用<strong>下班后的碎片时间</strong>，不露脸、不裸辞、不伤体面——在小红书跑通了从0到1的变现闭环：<strong>仅用2个月，变现8万+</strong>。
-      </p>
-      <div class="author-highlight">
-        不是"成功学"，是阿里5年产品思维 × AI工具落地的方法论。他讲的东西，每一个都亲自跑通过。
-      </div>
-      <div class="author-stats">
-        <div class="author-stat">
-          <div class="num">60<span> 篇</span></div>
-          <div class="note">AI辅助产出小红书笔记</div>
-        </div>
-        <div class="author-stat">
-          <div class="num">1,500<span>+</span></div>
-          <div class="note">精准付费粉丝</div>
-        </div>
-        <div class="author-stat">
-          <div class="num">8<span> 万+</span></div>
-          <div class="note">2个月副业变现</div>
-        </div>
-      </div>
+    <div class="inv-item">
+      <div class="icon">📐</div>
+      <h4>业务模型公式</h4>
+      <p>"你的优势 × 小红书付费点"，现场算出你的副业潜在收入</p>
     </div>
-  </section>
-
-  <!-- Inventory -->
-  <section class="section" id="takeaways">
-    <p class="ed-label">走出门你能带走什么</p>
-    <div class="inventory">
-      <div class="inv-item">
-        <div class="icon">🗺️</div>
-        <h4>起号路线图</h4>
-        <p>大厂人真实跑通的副业路径，避开所有割韭菜陷阱</p>
-      </div>
-      <div class="inv-item">
-        <div class="icon">🤖</div>
-        <h4>AI 落地方法</h4>
-        <p>从"懂概念"到"能变现"，4个AI内容生产流水线直接带走</p>
-      </div>
-      <div class="inv-item">
-        <div class="icon">📐</div>
-        <h4>业务模型公式</h4>
-        <p>"你的优势 × 小红书付费点"，现场算出你的副业潜在收入</p>
-      </div>
-      <div class="inv-item">
-        <div class="icon">📋</div>
-        <h4>全套资料包</h4>
-        <p>SOP流程文档 + 案例实战库，随看随练</p>
-      </div>
-      <div class="inv-item">
-        <div class="icon">👥</div>
-        <h4>专属社群</h4>
-        <p>每日选题雷达 + 7天发笔记机制 + 专人逐篇点评</p>
-      </div>
-      <div class="inv-item">
-        <div class="icon">🏗️</div>
-        <h4>复利资产</h4>
-        <p>搭建属于你自己的IP资产，攒足底气从容离开大厂</p>
-      </div>
+    <div class="inv-item">
+      <div class="icon">📋</div>
+      <h4>全套资料包</h4>
+      <p>SOP流程文档 + 案例实战库，随看随练</p>
     </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section" id="faq">
-    <p class="ed-label">常见疑虑 · 预先回应</p>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">我没有任何自媒体经验，真的能学会吗？</div>
-        <div class="faq-a">这门课专为零基础设计。轩廷起步时也是零粉、零经验、零团队。Part 3的现场练习和4个AI流水线会手把手带你从0产出第一篇内容。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">还在大厂上班，做副业会被公司发现吗？</div>
-        <div class="faq-a">核心方法论就是"不露脸、不伤体面"——不需要出镜、不需要实名、不需要暴露身份。轩廷全程未被公司发现。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">1599元，能回本吗？</div>
-        <div class="faq-a">7个真实案例中，"24.9元卖济州岛攻略赚4.6万"的例子说明变现门槛远比你想的低。轩廷用这套方法2个月变现8万+，ROI远超学费。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">课后有没有持续支持？</div>
-        <div class="faq-a">专属社群长期运营：每日选题雷达 + 7天发笔记机制 + 专人逐篇点评。不定期社群内复盘 + 导师助教实时答疑。不是听完就走。</div>
-      </div>
+    <div class="inv-item">
+      <div class="icon">👥</div>
+      <h4>专属学习社群</h4>
+      <p>每日选题雷达 + 7天发笔记机制 + 专人逐篇点评</p>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-final" id="cta">
-    <div class="cta-card">
-      <p class="scarcity">首期开放报名 · 仅限 25 个名额</p>
-      <div class="price-blk">
-        <div class="price-main">1,599<span> 元</span></div>
-        <p class="price-hike">三期后涨价至 2,699 元</p>
-      </div>
-      <p class="meta">📅 <strong>5月17日（周六）</strong> 下午 2:00 — 5:00</p>
-      <p class="meta">📍 <strong>杭州·拱墅区</strong>（具体地址付费后群内通知）</p>
-      <p class="meta">👥 仅限 <strong>25人</strong>，保证交流质量</p>
-      <a href="#qr" class="cta-arrow">锁定名额</a>
+    <div class="inv-item">
+      <div class="icon">🏗️</div>
+      <h4>复利资产</h4>
+      <p>搭建属于你自己的IP资产，攒足底气从容离开大厂</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- QR -->
-  <section class="qr-block" id="qr">
-    <p class="label">报名方式</p>
-    <div class="qr-placeholder">微信二维码</div>
-    <p class="wx">扫码添加微信 · 咨询并完成报名</p>
-    <p class="wx mt-12">或搜索微信号：<strong>xuanding_pm</strong></p>
-  </section>
+<!-- FAQ -->
+<section class="section" id="faq">
+  <p class="sec-label">你担心的我们都想了</p>
+  <h2 class="sec-title">常见问题</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">我没有任何自媒体经验，真的能学会吗？</div>
+      <div class="faq-a">这门课专为零基础设计。轩廷起步时也是零粉、零经验、零团队。Part 3的现场练习和4个AI流水线会手把手带你从0产出第一篇内容。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">还在大厂上班，做副业会被公司发现吗？</div>
+      <div class="faq-a">核心方法论就是"不露脸、不伤体面"——不需要出镜、不需要实名、不需要暴露身份。轩廷全程未被公司发现。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">1599元，能回本吗？</div>
+      <div class="faq-a">"24.9元卖济州岛攻略赚4.6万"的案例说明变现门槛远比你想的低。轩廷用这套方法2个月变现8万+，ROI远超学费。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">课后有没有持续支持？</div>
+      <div class="faq-a">专属社群长期运营：每日选题雷达 + 7天发笔记机制 + 专人逐篇点评。不定期社群内复盘 + 导师助教实时答疑。不是听完就走。</div>
+    </div>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <span class="gold-dot">●</span> 大厂人 · 一人公司 &nbsp;№ 001 · 2026 &nbsp;<span class="gold-dot">●</span><br>
-    <span style="font-size:10px;">本站为课程信息页，仅供内部参考 EST. 2026</span>
-  </footer>
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-card">
+    <p class="scarcity">首期开放报名 · 仅限25个名额</p>
+    <div class="price">1,599<span> 元</span></div>
+    <p class="hike">三期后涨价至 2,699 元</p>
+    <hr style="border:none;border-top:.5px solid var(--sep);margin:20px 0;">
+    <p class="detail">📅 <strong>5月17日（周六）</strong> 下午 2:00 — 5:00</p>
+    <p class="detail">📍 <strong>杭州·拱墅区</strong>（具体地址付费后群内通知）</p>
+    <p class="detail">👥 仅限 <strong>25人</strong>，保证交流质量</p>
+    <a href="#" class="cta-btn" onclick="alert('请添加下方微信完成报名')">锁定名额 →</a>
+  </div>
+</section>
 
-</div>
+<!-- QR -->
+<section class="qr-section">
+  <p class="ql">报名方式</p>
+  <div class="qr-placeholder">微信二维码</div>
+  <p class="qr-note">扫码添加微信 · 咨询并完成报名</p>
+  <p class="qr-note mt-8">或搜索微信号：<strong>xuanding_pm</strong></p>
+</section>
 
 <!-- Bottom Bar -->
 <div class="bottom-bar">
-  <div class="info"><span class="p">¥1,599</span> · 5/17 杭州 · 仅 25 席</div>
+  <div class="info"><span class="p">¥1,599</span> · 5/17杭州 · 仅25席</div>
   <button class="bb-btn" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">锁定名额</button>
 </div>
+
+<!-- Footer -->
+<footer class="footer">
+  <span class="dot">●</span> 知行新商学 &nbsp;№ 001 · 2026 &nbsp;<span class="dot">●</span>
+</footer>
 
 </body>
 </html>
