@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大厂人 · 一人公司 — 3小时线下实战</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --card: #ffffff;
+    --text: #2c2c2c;
+    --text-secondary: #78716c;
+    --accent: #1e40af;
+    --accent-light: #eff6ff;
+    --gold: #92400e;
+    --gold-light: #fffbeb;
+    --warm-accent: #b45309;
+    --border: #e7e5e0;
+    --tag-bg: #f5f0e8;
+    --shadow: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
+    --shadow-md: 0 4px 16px rgba(0,0,0,.05), 0 2px 4px rgba(0,0,0,.03);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,249,247,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo { font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: -.3px; }
+  .nav-links { display: flex; gap: 20px; list-style: none; font-size: 13px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #fff; border: none;
+    padding: 6px 18px; border-radius: 20px; font-size: 13px;
+    font-weight: 600; cursor: pointer; transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .88; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav { padding: 0 16px; }
+  }
+
+  /* ── Sections ── */
+  .section { max-width: 780px; margin: 0 auto; padding: 72px 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 120px 24px 72px; text-align: center;
+    background: linear-gradient(180deg, #f5f2ec 0%, var(--bg) 100%);
+  }
+  .hero-tags { display: flex; justify-content: center; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+  .hero-tag {
+    background: var(--tag-bg); color: var(--text-secondary);
+    padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px); font-weight: 800;
+    line-height: 1.25; letter-spacing: -1px; margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--accent);
+    background: linear-gradient(135deg, #3b5998 30%, #6d5d9e 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle { font-size: 17px; color: var(--text-secondary); margin-bottom: 8px; }
+  .hero-lecturer { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
+  .hero-lecturer span { color: var(--accent); font-weight: 600; }
+  .hero .btn-primary {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 14px 40px; border-radius: 28px; font-size: 16px;
+    font-weight: 700; text-decoration: none; letter-spacing: .5px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 16px rgba(30,64,175,.18);
+  }
+  .hero .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(30,64,175,.25); }
+  .hero-meta { margin-top: 20px; font-size: 13px; color: var(--text-secondary); }
+
+  /* ── Section Headers ── */
+  .sec-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--accent); margin-bottom: 12px;
+  }
+  .sec-title {
+    font-size: clamp(22px, 3.5vw, 30px); font-weight: 800;
+    letter-spacing: -.5px; margin-bottom: 12px;
+  }
+  .sec-desc { color: var(--text-secondary); font-size: 15px; margin-bottom: 40px; }
+
+  /* ── Pain Cards ── */
+  .pain-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pain-card {
+    background: var(--card); border-radius: var(--radius); padding: 28px 24px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    transition: transform .2s;
+  }
+  .pain-card:hover { transform: translateY(-3px); }
+  .pain-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .pain-card h3 { font-size: 16px; margin-bottom: 12px; letter-spacing: -.3px; }
+  .pain-card .quote {
+    font-size: 15px; color: #3d3d3d; font-weight: 500;
+    line-height: 1.7; padding: 14px 16px;
+    background: linear-gradient(135deg, #fef9f0 0%, #faf9f7 100%);
+    border-left: 3px solid #e8a838;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    position: relative;
+  }
+  .pain-card .quote::before {
+    content: '"'; position: absolute; top: -6px; left: 8px;
+    font-size: 40px; color: #e8a838; font-weight: 700; line-height: 1;
+    font-family: Georgia, serif; opacity: .5;
+  }
+
+  @media (max-width: 640px) {
+    .pain-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ── Data Strip ── */
+  .data-strip {
+    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    text-align: center; margin: 16px 0;
+  }
+  .data-item .num {
+    font-size: clamp(32px, 6vw, 48px); font-weight: 800;
+    color: var(--accent); letter-spacing: -2px;
+  }
+  .data-item .label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* ── Lecturer ── */
+  .lecturer-section { background: linear-gradient(180deg, var(--bg) 0%, #f5f1e8 100%); }
+  .lecturer-top {
+    display: flex; gap: 40px; align-items: center;
+    background: var(--card); border-radius: var(--radius);
+    padding: 40px; box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .lecturer-avatar-area { text-align: center; flex-shrink: 0; }
+  .lecturer-avatar-ring {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: linear-gradient(135deg, #e8e0d0, #d5c9b5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; margin: 0 auto 12px;
+    box-shadow: 0 0 0 6px #faf9f7, 0 0 0 8px rgba(180,140,100,.2);
+  }
+  .lecturer-avatar-area .name { font-size: 20px; font-weight: 800; letter-spacing: -.3px; }
+  .lecturer-avatar-area .role { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+  .lecturer-story { flex: 1; }
+  .lecturer-story .story-label {
+    display: inline-block; background: #fef3c7; color: #92400e;
+    padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .lecturer-story h3 { font-size: 18px; margin-bottom: 8px; letter-spacing: -.3px; }
+  .lecturer-story .story-p {
+    font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .lecturer-story .story-p strong { color: var(--text); }
+  .lecturer-story .story-highlight {
+    display: inline-block; background: linear-gradient(135deg, #fef9f0, #fdf3e0);
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    font-size: 14px; color: #92400e; font-weight: 600;
+    border: 1px solid #fde68a;
+  }
+
+  .lecturer-numbers {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px;
+  }
+  .lecturer-num-card {
+    background: var(--card); border-radius: var(--radius);
+    padding: 24px 20px; text-align: center;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .lecturer-num-card .big {
+    font-size: 34px; font-weight: 800; letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #b45309, #92400e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .lecturer-num-card .big span { font-size: 16px; }
+  .lecturer-num-card .lbl { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  @media (max-width: 640px) {
+    .lecturer-top { flex-direction: column; text-align: center; padding: 28px 20px; }
+    .lecturer-story .story-label { margin-top: 8px; }
+    .lecturer-numbers { grid-template-columns: 1fr; }
+  }
+
+  /* ── Timeline ── */
+  .timeline { padding: 0; }
+  .timeline-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  }
+  .timeline-step {
+    background: var(--card); border-radius: var(--radius);
+    padding: 24px 20px 20px; position: relative;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    transition: transform .2s, box-shadow .2s;
+    display: flex; flex-direction: column;
+  }
+  .timeline-step:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .timeline-step .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800; margin-bottom: 14px;
+    color: #fff; flex-shrink: 0;
+  }
+  .timeline-step:nth-child(1) .step-num { background: linear-gradient(135deg, #5b7ab8, #4a6599); }
+  .timeline-step:nth-child(2) .step-num { background: linear-gradient(135deg, #8b7ec8, #7568b5); }
+  .timeline-step:nth-child(3) .step-num { background: linear-gradient(135deg, #5a9e7c, #478866); }
+  .timeline-step:nth-child(4) .step-num { background: linear-gradient(135deg, #d48355, #c06a3c); }
+  .timeline-step .time {
+    font-size: 12px; font-weight: 700; letter-spacing: .5px;
+    margin-bottom: 6px;
+  }
+  .timeline-step:nth-child(1) .time { color: #5b7ab8; }
+  .timeline-step:nth-child(2) .time { color: #8b7ec8; }
+  .timeline-step:nth-child(3) .time { color: #5a9e7c; }
+  .timeline-step:nth-child(4) .time { color: #d48355; }
+  .timeline-step h4 { font-size: 15px; margin-bottom: 8px; letter-spacing: -.3px; line-height: 1.3; }
+  .timeline-step .desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; flex: 1; }
+  .timeline-step .gain {
+    font-size: 11px; line-height: 1.5; padding: 10px 12px;
+    border-radius: var(--radius-sm); margin-top: auto;
+  }
+  .timeline-step:nth-child(1) .gain { background: #f0f3f8; color: #4a6599; }
+  .timeline-step:nth-child(2) .gain { background: #f4f2fa; color: #6658a3; }
+  .timeline-step:nth-child(3) .gain { background: #edf6f1; color: #3d6e55; }
+  .timeline-step:nth-child(4) .gain { background: #fef7f2; color: #9a5528; }
+  .timeline-step .gain strong { font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .timeline-steps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .timeline-steps { grid-template-columns: 1fr; }
+  }
+
+  /* ── Takeaways ── */
+  .takeaway-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .takeaway-item {
+    background: var(--card); padding: 24px; border-radius: var(--radius);
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    text-align: center;
+  }
+  .takeaway-item .icon { font-size: 32px; margin-bottom: 8px; }
+  .takeaway-item h4 { font-size: 15px; margin-bottom: 4px; }
+  .takeaway-item p { font-size: 13px; color: var(--text-secondary); }
+  @media (max-width: 640px) {
+    .takeaway-list { grid-template-columns: 1fr; }
+  }
+
+  /* ── FAQ ── */
+  .faq-list { display: flex; flex-direction: column; gap: 8px; }
+  .faq-item {
+    background: var(--card); border-radius: var(--radius-sm);
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 18px 24px; font-weight: 600; font-size: 15px;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    user-select: none;
+  }
+  .faq-q::after { content: '+'; font-size: 18px; color: var(--accent); font-weight: 400; }
+  .faq-item.open .faq-q::after { content: '−'; }
+  .faq-a { padding: 0 24px 18px; font-size: 14px; color: var(--text-secondary); display: none; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA Bottom ── */
+  .cta-section { text-align: center; padding: 72px 24px; }
+  .cta-card {
+    background: var(--card); border-radius: var(--radius); padding: 40px 32px;
+    box-shadow: var(--shadow-md); border: 1px solid var(--border);
+    display: inline-block; max-width: 480px; width: 100%;
+  }
+  .cta-card .price {
+    font-size: 42px; font-weight: 800; letter-spacing: -2px;
+    margin: 16px 0 4px;
+  }
+  .cta-card .price-note { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+  .cta-card .price-hike { font-size: 12px; color: var(--gold); margin-bottom: 20px; }
+  .cta-card .detail { font-size: 14px; color: var(--text-secondary); margin-bottom: 6px; }
+  .cta-card .btn-large {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 16px 48px; border-radius: 28px; font-size: 17px;
+    font-weight: 700; text-decoration: none; margin-top: 20px;
+    box-shadow: 0 4px 16px rgba(30,64,175,.18);
+    border: none; cursor: pointer;
+  }
+  .cta-card .btn-large:hover { opacity: .9; }
+
+  /* ── QR Section ── */
+  .qr-section { text-align: center; padding: 0 24px 48px; }
+  .qr-placeholder {
+    width: 160px; height: 160px; margin: 0 auto 12px;
+    background: var(--tag-bg); border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--text-secondary);
+  }
+  .qr-note { font-size: 13px; color: var(--text-secondary); }
+
+  /* ── Bottom Bar (mobile) ── */
+  .bottom-bar {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--card); border-top: 1px solid var(--border);
+    padding: 10px 16px; z-index: 100;
+    align-items: center; justify-content: space-between;
+  }
+  .bottom-bar .info { font-size: 13px; }
+  .bottom-bar .info .p { font-weight: 700; color: var(--accent); }
+  .bottom-bar .btn-sm {
+    background: var(--accent); color: #fff; border: none;
+    padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  @media (max-width: 768px) { .bottom-bar { display: flex; } }
+
+  /* ── Footer ── */
+  .footer { text-align: center; padding: 32px 24px; font-size: 12px; color: #bbb; }
+
+  /* ── Utility ── */
+  .highlight { color: var(--accent); font-weight: 700; }
+  .text-center { text-align: center; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-logo">一人公司</div>
+  <ul class="nav-links">
+    <li><a href="#pain">痛点</a></li>
+    <li><a href="#timeline">大纲</a></li>
+    <li><a href="#lecturer">讲师</a></li>
+    <li><a href="#takeaways">收获</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">立即报名</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-tags">
+    <span class="hero-tag">不裸辞</span>
+    <span class="hero-tag">不露脸</span>
+    <span class="hero-tag">不伤体面</span>
+  </div>
+  <h1>大厂人，你的下一条路<br>不一定在<em>大厂</em></h1>
+  <p class="hero-subtitle">3小时线下沉浸式实战 · 用AI搭建属于你的一人公司</p>
+  <p class="hero-lecturer">
+    主讲人：<span>轩廷</span> · 北大CS硕士 · 阿里5年PM · 副业2个月变现8万+
+  </p>
+  <a href="#cta" class="btn-primary">立即锁定名额 →</a>
+  <p class="hero-meta">5月17日 · 杭州拱墅区 · 仅限25席</p>
+</section>
+
+<!-- Pain Points -->
+<section class="section" id="pain">
+  <p class="sec-label">这道题你也在做</p>
+  <h2 class="sec-title">你不是一个人</h2>
+  <p class="sec-desc">每一个大厂人都在深夜想过同一个问题：离开平台，我还剩下什么？</p>
+  <div class="pain-cards">
+    <div class="pain-card">
+      <div class="pain-card-icon">🔩</div>
+      <h3>能力越干越窄</h3>
+      <p class="quote">"在大厂写了5年SQL，优化了几百个CTR指标，出去不知道能干什么。"</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-card-icon">🪜</div>
+      <h3>晋升通道固化</h3>
+      <p class="quote">"身边的P8越来越多，但那个名额——凭什么是你？"</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-card-icon">🔄</div>
+      <h3>没有复利积累</h3>
+      <p class="quote">"加班换来的只有工资。期权、年终、职级——离开大厂那一刻，全部清零。"</p>
+    </div>
+  </div>
+  <p class="text-center mt-16" style="font-size:13px;color:var(--text-secondary)">
+    35岁之后你在大厂攒的一切：期权、工资、年终、职级、人脉——<span style="color:var(--accent);font-weight:600;">都会清零</span>。<br>
+    但也有人，已经在你之前找到了第二条路。
+  </p>
+</section>
+
+<!-- Data Strip -->
+<section class="section" style="padding-top:0;padding-bottom:0">
+  <div class="data-strip">
+    <div class="data-item">
+      <div class="num">60<span style="font-size:24px">篇</span></div>
+      <div class="label">AI辅助产出笔记</div>
+    </div>
+    <div class="data-item">
+      <div class="num">1,500<span style="font-size:24px">+</span></div>
+      <div class="label">精准付费粉丝</div>
+    </div>
+    <div class="data-item">
+      <div class="num">8<span style="font-size:24px">万+</span></div>
+      <div class="label">2个月副业变现</div>
+    </div>
+  </div>
+  <p class="text-center mt-8" style="font-size:13px;color:var(--text-secondary)">
+    以上数据来自讲师轩廷的真实副业战绩
+  </p>
+</section>
+
+<!-- Timeline -->
+<section class="section" id="timeline">
+  <p class="sec-label">3小时你会经历什么</p>
+  <h2 class="sec-title">一条从打工到复利的路径</h2>
+  <p class="sec-desc">不是泛泛而谈的分享，每一步都有具体方法、真实案例、可带走模板。</p>
+
+  <div class="timeline">
+    <div class="timeline-steps">
+      <div class="timeline-step">
+        <div class="step-num">1</div>
+        <span class="time">14:00 — 14:40</span>
+        <h4>看清趋势，找准方向</h4>
+        <p class="desc">拆透35岁清零背后的真问题，教大厂人如何构建可复利的个人资产。解析纳瓦尔复利公式与四种商业杠杆，看懂为什么AI时代是大厂人最值钱的窗口期。</p>
+        <div class="gain"><strong>你将看清：</strong>为什么是你 · 为什么是现在</div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-num">2</div>
+        <span class="time">14:40 — 15:20</span>
+        <h4>拆解案例，避坑借鉴</h4>
+        <p class="desc">7个真实变现案例深度拆解，从"24.9元卖济州岛攻略赚4.6万"到"AI矩阵号130万GMV"。三层金字塔分析法：比你差的人怎么做、同辈大厂人怎么做、我自己怎么做。</p>
+        <div class="gain"><strong>你将获得：</strong>每个案例的业务模型公式 + 关键成功洞察</div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-num">3</div>
+        <span class="time">15:20 — 16:00</span>
+        <h4>找到定位，落地实操</h4>
+        <p class="desc">IP定位10问法现场练习，写出你的专属业务模型公式。四维对标账号拆解法，结合正反面案例找到最适合你的对标方向。CES+CQS双算法深度解析 + 7条爆款实操技巧。</p>
+        <div class="gain"><strong>你将带走：</strong>你的专属业务模型公式 · 潜在收入测算</div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-num">4</div>
+        <span class="time">16:00 — 17:00</span>
+        <h4>AI实战，一人成军</h4>
+        <p class="desc">现场跑通4个爆款内容生产流水线：选题雷达、AI写作、自动发布、配图生成。掌握一人公司持久三要素：AIGC降本增效、活人感护城河、粉丝共创N×N增长。</p>
+        <div class="gain"><strong>你将掌握：</strong>4个AI流水线 · 直接复用，即可变现</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center mt-16" style="font-size:13px;color:var(--text-secondary)">
+    每个案例配套完整业务模型公式与关键成功洞察 · 7条可复用爆款内容实操公式
+  </p>
+</section>
+
+<!-- Lecturer -->
+<section class="section lecturer-section" id="lecturer">
+  <p class="sec-label">谁来讲</p>
+  <h2 class="sec-title">他走过你要走的路</h2>
+  <p class="sec-desc">不是职业讲师，是跟你一样从大厂走出来、用AI一个人跑通了商业闭环的实战者。</p>
+
+  <div class="lecturer-top">
+    <div class="lecturer-avatar-area">
+      <div class="lecturer-avatar-ring">🧑‍💻</div>
+      <div class="name">轩廷</div>
+      <div class="role">策略AI产品专家</div>
+    </div>
+    <div class="lecturer-story">
+      <span class="story-label">他也是大厂人</span>
+      <h3>从"用命换钱"到"用AI一人成军"</h3>
+      <p class="story-p">
+        轩廷，<strong>北大计算机硕士，阿里5年搜索策略PM</strong>。<br>
+        和每一个大厂人一样，他也经历过表演性加班、晋升焦虑、身心透支。<br>
+        不同的是，他没有等到35岁才开始想退路。<br>
+        他用<strong>下班后的碎片时间</strong>，不露脸、不裸辞、不伤体面地在小红书跑通了从0到1的变现闭环——<strong>仅用2个月，变现8万+</strong>。
+      </p>
+      <div class="story-highlight">
+        他不是教你"成功学"，而是给你一套他在阿里5年产品思维 × AI工具落地的方法论
+      </div>
+    </div>
+  </div>
+
+  <div class="lecturer-numbers">
+    <div class="lecturer-num-card">
+      <div class="big">60<span>篇</span></div>
+      <div class="lbl">AI辅助产出小红书笔记</div>
+    </div>
+    <div class="lecturer-num-card">
+      <div class="big">1,500<span>+</span></div>
+      <div class="lbl">精准付费粉丝</div>
+    </div>
+    <div class="lecturer-num-card">
+      <div class="big">8<span>万+</span></div>
+      <div class="lbl">2个月副业变现</div>
+    </div>
+  </div>
+</section>
+
+<!-- Takeaways -->
+<section class="section" id="takeaways">
+  <p class="sec-label">走出门你能带走什么</p>
+  <h2 class="sec-title">不只是笔记，是能用的武器</h2>
+  <div class="takeaway-list">
+    <div class="takeaway-item">
+      <div class="icon">🗺️</div>
+      <h4>起号路线图</h4>
+      <p>一份大厂人真实跑通的副业路径，避开所有割韭菜陷阱</p>
+    </div>
+    <div class="takeaway-item">
+      <div class="icon">🤖</div>
+      <h4>AI落地方法</h4>
+      <p>从"懂概念"到"能变现"，4个AI内容生产流水线直接带走</p>
+    </div>
+    <div class="takeaway-item">
+      <div class="icon">📐</div>
+      <h4>业务模型公式</h4>
+      <p>"你的优势 × 小红书付费点"，现场算出你的副业潜在收入</p>
+    </div>
+    <div class="takeaway-item">
+      <div class="icon">📋</div>
+      <h4>全套资料包</h4>
+      <p>SOP流程文档 + 案例实战库，随看随练</p>
+    </div>
+    <div class="takeaway-item">
+      <div class="icon">👥</div>
+      <h4>专属社群</h4>
+      <p>每日选题雷达分享 + 7天发笔记机制 + 专人逐篇点评</p>
+    </div>
+    <div class="takeaway-item">
+      <div class="icon">🏗️</div>
+      <h4>复利资产</h4>
+      <p>搭建属于你自己的IP资产，攒足底气从容离开大厂</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <p class="sec-label">你担心的我们都想了</p>
+  <h2 class="sec-title">常见问题</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        我没有任何自媒体经验，真的能学会吗？
+      </div>
+      <div class="faq-a">
+        这门课就是为零基础设计的。轩廷自己起步时也是零粉、零经验、零团队。<br>
+        Part 3的"现场练习写业务模型公式"和"4个AI流水线"会手把手带你从0产出第一篇内容。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        我还在大厂上班，做副业会被公司发现吗？
+      </div>
+      <div class="faq-a">
+        课程核心方法论就是"不露脸、不伤体面"——你不需要出镜、不需要实名、不需要暴露身份。<br>
+        轩廷自己就是边上班边做，2个月变现8万+，全程未被公司发现。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        1599元，能回本吗？
+      </div>
+      <div class="faq-a">
+        课程目标是让你掌握一套可持续变现的技能，而非一次性的"秘籍"。<br>
+        7个真实案例中，"24.9元卖济州岛攻略赚4.6万"的案例说明——变现门槛远比你想的低。<br>
+        轩廷用这套方法2个月变现8万+，ROI远超学费。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        课后有没有持续支持？学完不会用怎么办？
+      </div>
+      <div class="faq-a">
+        专属社群长期运营：每日选题雷达分享 + 7天发笔记机制 + 专人逐篇点评。<br>
+        不定期社群内复盘 + 导师、助教实时答疑。不是听完就走。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-card">
+    <p style="font-size:14px;color:var(--text-secondary)">首期开放报名 · 仅限25个名额</p>
+    <div class="price">¥1,599</div>
+    <p class="price-note">3期后涨价至 ¥2,699</p>
+    <p class="price-hike">⚠ 距离开课仅剩 2 天</p>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
+
+    <p class="detail">📅 <strong>5月17日（周六）下午2:00</strong></p>
+    <p class="detail">📍 <strong>杭州拱墅区</strong>（具体地址付费后群内通知）</p>
+    <p class="detail">👥 <strong>仅限25人</strong>，保证交流质量</p>
+
+    <a href="#" class="btn-large" onclick="alert('请添加下方微信完成报名')">立即锁定名额 →</a>
+  </div>
+</section>
+
+<!-- QR -->
+<section class="qr-section">
+  <p style="font-weight:700;margin-bottom:12px;">报名方式</p>
+  <div class="qr-placeholder">微信二维码</div>
+  <p class="qr-note">扫码添加微信，咨询并完成报名</p>
+  <p class="qr-note" style="margin-top:4px;">或搜索微信号：<strong style="color:var(--accent)">xuanding_pm</strong></p>
+</section>
+
+<!-- Bottom Bar Mobile -->
+<div class="bottom-bar">
+  <div class="info">
+    <span class="p">¥1,599</span> · 5/17杭州 · 仅25席
+  </div>
+  <button class="btn-sm" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">立即报名</button>
+</div>
+
+<footer class="footer">
+  大厂人 · 一人公司 © 2025
+</footer>
+
+</body>
+</html>
